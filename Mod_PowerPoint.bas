@@ -1,7 +1,7 @@
 Attribute VB_Name = "Mod_PowerPoint"
 Option Explicit
 Option Base 1
-Sub CutPasteChartsFromExcelToPowerPoint(variantCharts As Variant, ppSlide As Slide, wksExcel As Worksheet)
+Sub PowerPoint_CutPasteChartsFromExcel(variantCharts As Variant, ppSlide As Slide, wksExcel As Worksheet)
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 ' this subroutine will look for charts in PowerPoint and Excel then cut and past charts as appropriate based on the chart titles in
@@ -60,7 +60,7 @@ For c = 1 To UBound(variantCharts, 1)
     For d = 1 To ppSlide.Shapes.Count
         Set shapeTemp = ppSlide.Shapes.Item(d)
 
-        If IDShape(shapeTemp) = 1 Then
+        If PowerPoint_IDShape(shapeTemp) = 1 Then
             If StrComp(CStr(variantCharts(c, 1)), shapeTemp.Chart.ChartTitle.Caption, vbTextCompare) = 0 Then
                 ' get PowerPoint shape, size and dimentions
                 doubleChartHeight = shapeTemp.Height
@@ -72,7 +72,7 @@ For c = 1 To UBound(variantCharts, 1)
                 ' search through excel shapes
                 For b = 1 To wksExcel.Shapes.Count
                     ' ID's a chart
-                    If IDShape(wksExcel.Shapes.Item(b)) = 1 Then
+                    If PowerPoint_IDShape(wksExcel.Shapes.Item(b)) = 1 Then
                        
                         ' ID's the correct chart
                         stringExcelChartTitle = CStr(variantCharts(c, 2))
@@ -110,7 +110,7 @@ For c = 1 To UBound(variantCharts, 1)
     Next d
 Next c
 End Sub
-Function IDShape(objShape As Object)
+Function PowerPoint_IDShape(objShape As Object)
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 ' this function identifies the type of shape between chart, table, textframe and returns and id number
@@ -155,9 +155,9 @@ ElseIf objShape.HasTextFrame = msoTrue Then
 Else ' do nothing
 End If
 
-IDShape = integerShapeID
+PowerPoint_IDShape = integerShapeID
 End Function
-Function ModifyTitle(stringSlideTitle As String, dateReportDate As Date, longSlideNumber As Long) As String
+Function PowerPoint_ModifyTitle(stringSlideTitle As String, dateReportDate As Date, longSlideNumber As Long) As String
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 ' this subroutine add the date to the title of the slide
@@ -206,9 +206,9 @@ Else
     stringTemp = stringTemp & CStr(Format(dateReportDate, "dddd, mmmm dd, yyyy"))
 End If
 
-ModifyTitle = stringTemp
+PowerPoint_ModifyTitle = stringTemp
 End Function
-Sub AppendixSlide(ppTempSlide As PowerPoint.Slide, dateReportDate As Date)
+Sub PowerPoint_AppendixSlide(ppTempSlide As PowerPoint.Slide, dateReportDate As Date)
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 ' this subroutine will create slide 3 from the PowerPoint template and the data from the excel spreadsheet.  It is looking for all
@@ -263,7 +263,7 @@ c = 1
 ' add all shapes in power point slide to collection
 For b = 1 To ppTempSlide.Shapes.Count
     Set shapePowerPoint = ppTempSlide.Shapes.Item(b)
-    If TestGroupItems(shapePowerPoint) = True Then
+    If PowerPoint_TestGroupItems(shapePowerPoint) = True Then
         For c = 1 To shapePowerPoint.GroupItems.Count
             collShapeIds.Add Item:=shapePowerPoint.GroupItems.Item(c)
         Next c
@@ -277,14 +277,14 @@ Set shapePowerPoint = Nothing
 For a = 1 To collShapeIds.Count
     Set shapeTemp = collShapeIds.Item(a)
    
-    Select Case IDShape(shapeTemp)
+    Select Case PowerPoint_IDShape(shapeTemp)
         Case 1 ' chart
             ' do nothing, no chart on this slide
         Case 2 ' table
             ' do nothing, no table on slide
         Case 3 ' textframe
             If StrComp(Left(shapeTemp.Name, 5), "Title", vbTextCompare) = 0 And boolModTitle = False Then
-                shapeTemp.TextFrame.TextRange.Text = ModifyTitle(shapeTemp.TextFrame.TextRange.Text, dateReportDate, ppTempSlide.SlideNumber)
+                shapeTemp.TextFrame.TextRange.Text = PowerPoint_ModifyTitle(shapeTemp.TextFrame.TextRange.Text, dateReportDate, ppTempSlide.SlideNumber)
                 shapeTemp.TextFrame.VerticalAnchor = msoAnchorMiddle
                 boolModTitle = True
             Else ' do nothing
@@ -296,7 +296,7 @@ For a = 1 To collShapeIds.Count
     Set shapeTemp = Nothing
 Next a
 End Sub
-Function TestGroupItems(ByVal shapeTest As Object) As Boolean
+Function PowerPoint_TestGroupItems(ByVal shapeTest As Object) As Boolean
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 ' this function tests for group items in a PowerPoint slide
@@ -324,12 +324,12 @@ Function TestGroupItems(ByVal shapeTest As Object) As Boolean
 ' start
 On Error GoTo errorHandler
 shapeTest.GroupItems
-TestGroupItems = True
+PowerPoint_TestGroupItems = True
 On Error GoTo 0
 Exit Function
 
 errorHandler:
-TestGroupItems = False
+PowerPoint_TestGroupItems = False
 On Error GoTo 0
 End Function
 
