@@ -43,7 +43,7 @@ longReturnRow = 1
 
 ' start
 ' has something in it by column to the left
-Set rangeCell = wksCurrentSheet.Cells(longColumnNum, longLastRow)
+Set rangeCell = wksCurrentSheet.Cells(longLastRow, longColumnNum)
 
 ' test if cell is empty then go up to find the next
 ' row cell in column that is not empty
