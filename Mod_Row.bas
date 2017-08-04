@@ -43,7 +43,7 @@ longReturnRow = 1
 
 ' start
 ' has something in it by column to the left
-Set rangeCell = wksCurrentSheet.Cells(longLastRow, longLastRow)
+Set rangeCell = wksCurrentSheet.Cells(longColumnNum, longLastRow)
 
 ' test if cell is empty then go up to find the next
 ' row cell in column that is not empty
@@ -130,7 +130,7 @@ End Function
 Sub Row_Copy(wksSource As Worksheet, wksDestination As Worksheet, longCopyRow As Long, longInsertAboveRow As Long)
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-' Copies the header row from the source worksheet to the destination worksheet and
+' Copies the row from the source worksheet to the destination worksheet and
 ' turns on the Auto-filter
 '
 ' Inputs
