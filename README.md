@@ -52,11 +52,11 @@ Mod_Pivot.bas methods:
   - Pivto_SetFieldValues -> set specific values in a pivot field
 
 Mod_PowerPoint methods:
-    - PowerPoint_AppendsixSlide -> an example on how to create a PowerPoint slide from a PowerPoint presentation and add data / objects         from Excel
-    - PowerPoint_CutPasteChartsFromExcel -> an example of how to cut and paste charts from Excel to PowerPoint
-    - PowerPoint_IDShape -> identifies the type of PowerPoint shape
-    - PowerPoint_ModifyTitle -> an example of how to modify a slide title in PowerPoint
-    - PowerPoint_TestGroupItems -> determines if a shape is grouped or not
+  - PowerPoint_AppendsixSlide -> an example on how to create a PowerPoint slide from a PowerPoint presentation and add data / objects         from Excel
+  - PowerPoint_CutPasteChartsFromExcel -> an example of how to cut and paste charts from Excel to PowerPoint
+  - PowerPoint_IDShape -> identifies the type of PowerPoint shape
+  - PowerPoint_ModifyTitle -> an example of how to modify a slide title in PowerPoint
+  - PowerPoint_TestGroupItems -> determines if a shape is grouped or not
 
 Mod_Queries.bas methods:
   - Query_Refresh -> a simple method that refreshes the SQL queries of all the workshees in the workbooks collection
