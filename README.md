@@ -6,7 +6,7 @@ The Excel file has all the modules and all the references included to be able to
 
 Mod_Autofilter.bas methods:
   - AutoFilter_Clear -> clears the autofilter
-  - Autofilter_OnOff -> turns the autogilter on or off
+  - Autofilter_OnOff -> turns the autofilter on or off
   - Autofilter_SimpleSort -> simple sort
 
 Mod_Cells.bas methods:
